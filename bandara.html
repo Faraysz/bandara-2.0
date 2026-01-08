@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyWings - Layanan Penerbangan Terpercaya</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23667eea" width="1200" height="600"/><path fill="%23764ba2" d="M0 300L50 283.3C100 266.7 200 233.3 300 233.3C400 233.3 500 266.7 600 283.3C700 300 800 300 900 283.3C1000 266.7 1100 233.3 1150 216.7L1200 200V600H1150C1100 600 1000 600 900 600C800 600 700 600 600 600C500 600 400 600 300 600C200 600 100 600 50 600H0V300Z"/></svg>');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #667eea;
+        }
+
+        .booking-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-top: -80px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input, .form-group select {
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .chat-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            transition: transform 0.3s;
+            z-index: 999;
+        }
+
+        .chat-button:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-button::before {
+            content: '💬';
+            font-size: 1.8rem;
+        }
+
+        .chatbot {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 999;
+        }
+
+        .chatbot.active {
+            display: flex;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-close {
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background: #f5f5f5;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 10px;
+            max-width: 80%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .message.bot {
+            background: white;
+            margin-right: auto;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-left: auto;
+        }
+
+        .chat-input-container {
+            padding: 1rem;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .chat-send {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .destinations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .destination-card {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .destination-img {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .destination-info {
+            padding: 1.5rem;
+            background: white;
+        }
+
+        .destination-info h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .price {
+            color: #764ba2;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .quick-options {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .quick-option {
+            background: #f0f0f0;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .quick-option:hover {
+            background: #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .chatbot {
+                width: 90%;
+                right: 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">✈️ SkyWings</div>
+            <ul class="nav-links">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#booking">Pesan Tiket</a></li>
+                <li><a href="#destinations">Destinasi</a></li>
+                <li><a href="#features">Layanan</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Jelajahi Dunia Bersama SkyWings</h1>
+            <p>Pengalaman terbang yang nyaman dan terpercaya ke berbagai destinasi</p>
+        </div>
+    </section>
+
+    <section class="section" id="booking">
+        <div class="booking-form">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">Pesan Tiket Penerbangan</h2>
+            <form id="bookingForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Dari</label>
+                        <select id="from" required>
+                            <option value="">Pilih Kota</option>
+                            <option value="Jakarta">Jakarta (CGK)</option>
+                            <option value="Surabaya">Surabaya (SUB)</option>
+                            <option value="Bali">Bali (DPS)</option>
+                            <option value="Medan">Medan (KNO)</option>
+                            <option value="Makassar">Makassar (UPG)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ke</label>
+                        <select id="to" required>
+                            <option value="">Pilih Kota</option>
+                            <option value="Jakarta">Jakarta (CGK)</option>
+                            <option value="Surabaya">Surabaya (SUB)</option>
+                            <option value="Bali">Bali (DPS)</option>
+                            <option value="Medan">Medan (KNO)</option>
+                            <option value="Makassar">Makassar (UPG)</option>
+                            <option value="Singapura">Singapura (SIN)</option>
+                            <option value="Bangkok">Bangkok (BKK)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Berangkat</label>
+                        <input type="date" id="departure" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Pulang</label>
+                        <input type="date" id="return">
+                    </div>
+                    <div class="form-group">
+                        <label>Penumpang</label>
+                        <select id="passengers" required>
+                            <option value="1">1 Penumpang</option>
+                            <option value="2">2 Penumpang</option>
+                            <option value="3">3 Penumpang</option>
+                            <option value="4">4 Penumpang</option>
+                            <option value="5">5+ Penumpang</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Kelas</label>
+                        <select id="class" required>
+                            <option value="ekonomi">Ekonomi</option>
+                            <option value="bisnis">Bisnis</option>
+                            <option value="first">First Class</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn">🔍 Cari Penerbangan</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="section" id="destinations">
+        <h2 class="section-title">Destinasi Populer</h2>
+        <div class="destinations">
+            <div class="destination-card">
+                <div class="destination-img">🏝️</div>
+                <div class="destination-info">
+                    <h3>Bali</h3>
+                    <p>Pulau dewata dengan pantai indah dan budaya yang kaya</p>
+                    <div class="price">Mulai dari Rp 750.000</div>
+                </div>
+            </div>
+            <div class="destination-card">
+                <div class="destination-img">🌆</div>
+                <div class="destination-info">
+                    <h3>Singapura</h3>
+                    <p>Kota modern dengan berbagai atraksi wisata menarik</p>
+                    <div class="price">Mulai dari Rp 1.200.000</div>
+                </div>
+            </div>
+            <div class="destination-card">
+                <div class="destination-img">🏙️</div>
+                <div class="destination-info">
+                    <h3>Bangkok</h3>
+                    <p>Ibu kota Thailand dengan kuil dan kuliner lezat</p>
+                    <div class="price">Mulai dari Rp 1.500.000</div>
+                </div>
+            </div>
+            <div class="destination-card">
+                <div class="destination-img">🏖️</div>
+                <div class="destination-info">
+                    <h3>Lombok</h3>
+                    <p>Surga tersembunyi dengan pantai eksotis dan Gunung Rinjani</p>
+                    <div class="price">Mulai dari Rp 850.000</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="features">
+        <h2 class="section-title">Mengapa Memilih SkyWings?</h2>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>Harga Terbaik</h3>
+                <p>Dapatkan harga tiket pesawat termurah dengan berbagai promo menarik setiap harinya</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Aman & Terpercaya</h3>
+                <p>Transaksi aman dengan sistem pembayaran terenkripsi dan terjamin</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Proses Cepat</h3>
+                <p>Booking cepat dan mudah hanya dalam hitungan menit</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎫</div>
+                <h3>E-Ticket Instan</h3>
+                <p>Dapatkan e-ticket langsung setelah pembayaran dikonfirmasi</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📞</div>
+                <h3>Customer Service 24/7</h3>
+                <p>Tim support kami siap membantu Anda kapan saja</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>Banyak Destinasi</h3>
+                <p>Terbang ke berbagai destinasi domestik dan internasional</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="chat-button" id="chatButton"></div>
+
+    <div class="chatbot" id="chatbot">
+        <div class="chat-header">
+            <h3>SkyWings Assistant</h3>
+            <span class="chat-close" id="chatClose">✕</span>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot">
+                Halo! 👋 Saya asisten virtual SkyWings. Ada yang bisa saya bantu?
+            </div>
+            <div class="quick-options" id="quickOptions">
+                <div class="quick-option" data-msg="Cara pesan tiket">Cara pesan tiket</div>
+                <div class="quick-option" data-msg="Cek status penerbangan">Cek status penerbangan</div>
+                <div class="quick-option" data-msg="Kebijakan bagasi">Kebijakan bagasi</div>
+                <div class="quick-option" data-msg="Metode pembayaran">Metode pembayaran</div>
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Ketik pesan...">
+            <button class="chat-send" id="chatSend">Kirim</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 SkyWings Airlines. All rights reserved.</p>
+        <p>Hubungi kami: info@skywings.com | +62 21 1234 5678</p>
+    </footer>
+
+    <script>
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('departure').min = today;
+        document.getElementById('return').min = today;
+
+        // Booking form handler
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const from = document.getElementById('from').value;
+            const to = document.getElementById('to').value;
+            const departure = document.getElementById('departure').value;
+            const passengers = document.getElementById('passengers').value;
+            const flightClass = document.getElementById('class').value;
+
+            if (from === to) {
+                alert('Kota keberangkatan dan tujuan tidak boleh sama!');
+                return;
+            }
+
+            alert(`Mencari penerbangan...\n\nDari: ${from}\nKe: ${to}\nTanggal: ${departure}\nPenumpang: ${passengers}\nKelas: ${flightClass}\n\nTiket akan segera ditampilkan!`);
+        });
+
+        // Chatbot functionality
+        const chatButton = document.getElementById('chatButton');
+        const chatbot = document.getElementById('chatbot');
+        const chatClose = document.getElementById('chatClose');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatSend = document.getElementById('chatSend');
+
+        chatButton.addEventListener('click', () => {
+            chatbot.classList.add('active');
+        });
+
+        chatClose.addEventListener('click', () => {
+            chatbot.classList.remove('active');
+        });
+
+        function addMessage(text, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function getBotResponse(message) {
+            const lowerMsg = message.toLowerCase();
+            
+            if (lowerMsg.includes('pesan') || lowerMsg.includes('booking') || lowerMsg.includes('tiket')) {
+                return 'Untuk memesan tiket, silakan isi formulir pemesanan di halaman utama. Pilih kota keberangkatan, tujuan, tanggal, dan jumlah penumpang. Kemudian klik tombol "Cari Penerbangan" untuk melihat opsi yang tersedia. 🎫';
+            } else if (lowerMsg.includes('status') || lowerMsg.includes('penerbangan')) {
+                return 'Anda dapat mengecek status penerbangan dengan memasukkan nomor penerbangan di halaman "Cek Status". Status akan menampilkan informasi real-time tentang jadwal keberangkatan dan kedatangan. ✈️';
+            } else if (lowerMsg.includes('bagasi')) {
+                return 'Kebijakan bagasi kami:\n• Ekonomi: 20kg bagasi tercatat + 7kg kabin\n• Bisnis: 30kg bagasi tercatat + 10kg kabin\n• First Class: 40kg bagasi tercatat + 12kg kabin\nBagasi berlebih akan dikenakan biaya tambahan. 🧳';
+            } else if (lowerMsg.includes('bayar') || lowerMsg.includes('pembayaran')) {
+                return 'Kami menerima berbagai metode pembayaran:\n• Transfer Bank (BCA, Mandiri, BNI, BRI)\n• Kartu Kredit/Debit\n• E-wallet (GoPay, OVO, DANA, ShopeePay)\n• Virtual Account\nSemua transaksi aman dan terenkripsi. 💳';
+            } else if (lowerMsg.includes('harga') || lowerMsg.includes('promo')) {
+                return 'Harga tiket bervariasi tergantung rute dan waktu. Kami sering memiliki promo spesial! Daftarkan email Anda untuk mendapatkan notifikasi promo terbaru. Dapatkan diskon hingga 50% untuk early bird booking! 🎉';
+            } else if (lowerMsg.includes('reschedule') || lowerMsg.includes('ubah')) {
+                return 'Untuk mengubah jadwal penerbangan, silakan hubungi customer service kami atau akses menu "Kelola Booking" dengan kode booking Anda. Biaya perubahan bervariasi tergantung waktu dan jenis tiket. 📅';
+            } else if (lowerMsg.includes('refund') || lowerMsg.includes('batal')) {
+                return 'Kebijakan pembatalan:\n• 7+ hari sebelum keberangkatan: Refund 80%\n• 3-7 hari: Refund 50%\n• <3 hari: Tidak dapat direfund\nSilakan hubungi CS kami untuk proses refund. 💰';
+            } else if (lowerMsg.includes('halo') || lowerMsg.includes('hai') || lowerMsg.includes('hello')) {
+                return 'Halo! Selamat datang di SkyWings! Ada yang bisa saya bantu hari ini? 😊';
+            } else if (lowerMsg.includes('terima kasih') || lowerMsg.includes('thanks')) {
+                return 'Sama-sama! Senang bisa membantu Anda. Jangan ragu untuk bertanya lagi jika ada yang ingin ditanyakan. Selamat terbang bersama SkyWings! ✈️';
+            } else {
+                return 'Maaf, saya kurang memahami pertanyaan Anda. Beberapa topik yang bisa saya bantu: pemesanan tiket, status penerbangan, bagasi, pembayaran, harga & promo. Atau hubungi customer service kami di +62 21 1234 5678 untuk bantuan lebih lanjut. 📞';
+            }
+        }
+
+        chatSend.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message) {
+                addMessage(message, true);
+                chatInput.value = '';
+                
+                setTimeout(() => {
+                    const response = getBotResponse(message);
+                    addMessage(response);
+                }, 500);
+            }
+        }
+
+        // Quick options handler
+        document.getElementById('quickOptions').addEventListener('click', function(e) {
+            if (e.target.classList.contains('quick-option')) {
+                const message = e.target.dataset.msg;
+                addMessage(message, true);
+                setTimeout(() => {
+                    const response = getBotResponse(message);
+                    addMessage(response);
+                }, 500);
+            }
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
